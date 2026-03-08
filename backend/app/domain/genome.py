@@ -1,3 +1,5 @@
+from domain.gene import Gene
+
 class Genome:
     def __init__(self, genes):
         self.genes = {gene.name: gene for gene in genes}

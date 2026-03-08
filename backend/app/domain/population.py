@@ -1,3 +1,7 @@
+from domain.organism import Organism  # Organism class
+from domain.environment import Environment       # Environment class
+from domain.trait import Trait            # Base Trait class or TraitSystem
+
 class Population:
     def __init__(self, organisms: list):
         self.organisms = organisms

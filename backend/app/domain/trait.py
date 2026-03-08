@@ -1,3 +1,6 @@
+from domain.genome import Genome
+from domain.environment import Environment
+
 class Trait:
 
     def __init__(self, name, gene_names):

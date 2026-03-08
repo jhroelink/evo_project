@@ -1,3 +1,8 @@
+from domain.genome import Genome
+from domain.environment import Environment
+from domain.trait import Trait  # or TraitSystem if you have one
+
+
 class Organism:
     def __init__(self, genome):
         self.genome = genome
