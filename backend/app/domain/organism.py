@@ -1,6 +1,6 @@
 from domain.genome import Genome
 from domain.environment import Environment
-from domain.trait import Trait  # or TraitSystem if you have one
+from domain.trait_system import TraitSystem
 
 
 class Organism:
@@ -11,7 +11,7 @@ class Organism:
         self.fitness = 0
         self.alive = True
 
-    def evaluate_fitness(self, environment, trait_system):
+    def evaluate_fitness(self, environment: Environment, trait_system: TraitSystem):
         self.fitness = trait_system.evaluate(self.genome, environment)
 
     def age_step(self):
