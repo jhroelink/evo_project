@@ -11,6 +11,15 @@ class Organism:
         self.fitness = 0
         self.alive = True
 
+    def consume_energy(self, amount):
+        self.energy -= amount
+        if self.energy <= 0:
+            self.energy = 0
+            self.alive = False
+
+    def gain_energy(self, amount):
+        self.energy += amount
+        
     def evaluate_fitness(self, environment: Environment, trait_system: TraitSystem):
         self.fitness = trait_system.evaluate(self.genome, environment)
 

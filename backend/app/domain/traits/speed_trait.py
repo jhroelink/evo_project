@@ -13,6 +13,8 @@ class SpeedTrait(Trait):
         """
         return genome.get_trait("speed")
     
-    def fitness(self, phenotype_value, environment):
+    def fitness(self, phenotype_value, environment, organism):
         # speed = self.phenotype(genome)
+        energy_cost = phenotype_value * 0.5
+        organism.consume_energy(energy_cost)
         return phenotype_value * environment.predator_pressure
