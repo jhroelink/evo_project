@@ -13,9 +13,9 @@ class TraitSystem:
             total_fitness += trait.fitness(phenotype_value, biome)
         return total_fitness
     
-    def evaluate_energy_costs_traits(self, genome: Genome):
-        total_energy_cost = 5
-        for trait in self.traits:
-            phenotype_value = trait.phenotype(genome)
-            total_energy_cost += trait.energy_cost(phenotype_value)
-        return total_energy_cost
+    # def evaluate_energy_costs_traits(self, genome: Genome):
+    #     total_energy_cost = 5
+    #     for trait in self.traits:
+    #         phenotype_value = trait.phenotype(genome)
+    #         total_energy_cost += trait.energy_cost(phenotype_value)
+    #     return total_energy_cost

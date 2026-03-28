@@ -28,8 +28,8 @@ def init_simulation():
     world_map = Map(10, 10)
 
     # Create biomes
-    biome1 = Biome("High pressure", 5, 10, 10)
-    biome2 = Biome("Low Pressure", 20, 1, 1)
+    biome1 = Biome("High pressure", 0.2, 1, 1)
+    biome2 = Biome("Low Pressure", 1, 0.1, 0.1)
 
     # Fill map
     for x in range(world_map.width):
@@ -80,8 +80,11 @@ def run_simulation(sim):
 
 if __name__ == "__main__":
     sim = init_simulation()
-    print(len(sim.population.organisms))
-    i = 0
-    while sim.population.organisms[0].energy > 0 and i < 50:
-        run_simulation(sim)
-        i += 1
+
+    for step in range(50):
+        sim.step()
+
+        print(f"\nStep {step}")
+        print_map(sim.world_map, sim.population.organisms)
+
+        print("Population size:", len(sim.population.organisms))

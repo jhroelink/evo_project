@@ -17,6 +17,6 @@ class SpeedTrait(Trait):
     def fitness(self, phenotype_value, biome: Biome):
         return phenotype_value * biome.predator_pressure
     
-    def energy_cost(self, phenotype_value):        
-        energy_cost = phenotype_value * 0.5
-        return energy_cost
+    # def energy_cost(self, phenotype_value):        
+    #     energy_cost = phenotype_value * 0.5
+    #     return energy_cost
