@@ -5,8 +5,14 @@ class Genome:
         self.genes = {gene.name: gene for gene in genes}
 
     def mutate(self):
+        new_genes = []
+
         for gene in self.genes.values():
-            gene.mutate()
+            new_gene = gene.copy()
+            new_gene.mutate()
+            new_genes.append(new_gene)
+
+        return Genome(new_genes)
 
     def get_trait(self, name):
         return self.genes[name].value

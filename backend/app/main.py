@@ -7,8 +7,8 @@ from domain.genome import Genome
 from domain.trait_system import TraitSystem
 from domain.traits.speed_trait import SpeedTrait
 from domain.map import Map
-from domain.environment import Environment
-
+from domain.biome import Biome
+from domain.simulation import Simulation
 
 def print_map(map_obj, organisms):
     """
@@ -23,45 +23,68 @@ def print_map(map_obj, organisms):
     for row in grid:
         print(" ".join(row))
 
-
-def run_simulation():
-
+def init_simulation():
     # Create map
     world_map = Map(10, 10)
 
-    # Fill map with same biome for now
+    # Create biomes
+    biome1 = Biome("High pressure", 0.2, 1, 1)
+    biome2 = Biome("Low Pressure", 1, 0.1, 0.1)
+
+    # Fill map
     for x in range(world_map.width):
         for y in range(world_map.height):
-            world_map.set_biome(x, y, Environment(food_density=10.0, predator_pressure=10.0))
+            if x % 2 == 0:
+                world_map.set_biome(x, y, biome1)
+            else:
+                world_map.set_biome(x, y, biome2)
+
+    # Create genes
+    gene1_speed = Gene("speed", 1.0, 0.05)
+    gene2_speed = Gene("speed", 0.2, 0.05)
 
     # Create genomes
-    gene_speed = Gene("speed", 1.0, 0.05)
-    genome1 = Genome([gene_speed])
-    genome2 = Genome([Gene("speed", 0.2, 0.05)])
+    genome1 = Genome([gene1_speed])
+    genome2 = Genome([gene2_speed])
 
-    # Create organisms with positions
+    # Create organisms
     organism1 = Organism(genome1, 2, 3)
     organism2 = Organism(genome2, 6, 7)
 
     # Create population
     population = Population([organism1, organism2])
 
-    # Create trait system
+    # Trait system
     trait_system = TraitSystem([SpeedTrait()])
 
-    # Evaluate fitness
-    for organism in population.organisms:
-        organism.evaluate_fitness(world_map, trait_system)
+    return Simulation(world_map, population, trait_system)
 
+
+def run_simulation(sim):
+    # Evaluate fitness
+    for organism in sim.population.organisms:
+        organism.evaluate_fitness_organism(sim.world_map, sim.trait_system)
+        organism.evaluate_energy_organism(sim.trait_system)
+
+    
     # Print map
     print("\nMap:")
-    print_map(world_map, population.organisms)
+    print_map(sim.world_map, sim.population.organisms)
 
     # Print results
     print("\nFitness:")
-    for i, org in enumerate(population.organisms, start=1):
+    for i, org in enumerate(sim.population.organisms, start=1):
         print(f"Organism {i} fitness: {org.fitness}")
+        print(f"Organism {i} energy:  {org.energy}")
 
 
 if __name__ == "__main__":
-    run_simulation()
+    sim = init_simulation()
+
+    for step in range(50):
+        sim.step()
+
+        print(f"\nStep {step}")
+        print_map(sim.world_map, sim.population.organisms)
+
+        print("Population size:", len(sim.population.organisms))

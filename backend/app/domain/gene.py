@@ -9,5 +9,8 @@ class Gene:
 
     def mutate(self):
         if random.random() < self.mutation_rate:
-            self.value += np.random.normal(0, 0.1)
-    
+            self.value *= np.random.normal(1.0, 0.05)
+            self.value = max(0.0, min(self.value, 10.0))
+            
+    def copy(self):
+        return Gene(self.name, self.value, self.mutation_rate)

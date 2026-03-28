@@ -1,5 +1,5 @@
 from domain.genome import Genome
-from domain.environment import Environment
+from domain.biome import Biome
 
 class Trait:
 
