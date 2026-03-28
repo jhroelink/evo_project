@@ -1,6 +1,7 @@
 from domain.trait import Trait
 from domain.genome import Genome
-from domain.environment import Environment
+from domain.biome import Biome
+from domain.organism import Organism
 
 class SpeedTrait(Trait):
 
@@ -13,8 +14,9 @@ class SpeedTrait(Trait):
         """
         return genome.get_trait("speed")
     
-    def fitness(self, phenotype_value, environment, organism):
-        # speed = self.phenotype(genome)
+    def fitness(self, phenotype_value, biome: Biome):
+        return phenotype_value * biome.predator_pressure
+    
+    def energy_cost(self, phenotype_value):        
         energy_cost = phenotype_value * 0.5
-        organism.consume_energy(energy_cost)
-        return phenotype_value * environment.predator_pressure
+        return energy_cost

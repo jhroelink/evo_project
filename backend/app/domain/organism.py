@@ -1,5 +1,5 @@
 from domain.genome import Genome
-from domain.environment import Environment
+from domain.biome import Biome
 from domain.trait_system import TraitSystem
 from domain.map import Map
 import random as random
@@ -23,9 +23,13 @@ class Organism:
     def gain_energy(self, amount):
         self.energy += amount
         
-    def evaluate_fitness(self, map: Map, trait_system: TraitSystem):
+    def evaluate_fitness_organism(self, map: Map, trait_system: TraitSystem):
         local_biome = map.get_biome(self.x, self.y)
-        self.fitness = trait_system.evaluate(self.genome, local_biome)
+        self.fitness = trait_system.evaluate_fitness_traits(self.genome, local_biome)
+
+    def evaluate_energy_organism(self, trait_system: TraitSystem):
+        energy_cost = trait_system.evaluate_energy_costs_traits(self.genome)
+        self.consume_energy(energy_cost)
 
     def get_fitness(self, x, y, map: Map, trait_system: TraitSystem):
         local_biome = map.get_biome(x, y)
